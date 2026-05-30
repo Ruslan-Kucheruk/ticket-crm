@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Customer;
 use App\Models\Ticket;
+use Carbon\Carbon;
 
 class TicketController extends Controller
 {
@@ -18,6 +19,17 @@ class TicketController extends Controller
     public function store(StoreTicketRequest $request)
     {
         $validated = $request->validated();
+
+        $hasRecentTicket = Ticket::query()->forDay()->whereHas('customer', function($query) use ($validated){
+            $query->where('email', $validated['email'])->
+            orWhere('phone', $validated['phone']);
+        })->exists();
+
+        if($hasRecentTicket){
+            return response()->json([
+                'message'=>'You can send only one request per one day',
+            ], 429);
+        }
         
         $customer = Customer::firstOrCreate(
             [
