@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 class WidgetController extends Controller
 {
-    public function create(){
+    public function create()
+    {
 
     }
 }

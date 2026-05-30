@@ -12,7 +12,8 @@ class Ticket extends Model
     use HasFactory;
     use InteractsWithMedia;
 
-    public function customer(){
+    public function customer()
+    {
         return $this->belongsTo(Customer::class);
     }
 }
