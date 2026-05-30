@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
+use App\Http\Resources\TicketStatisticsResource;
 use App\Models\Customer;
 use App\Models\Ticket;
 use Carbon\Carbon;
@@ -57,9 +58,15 @@ class TicketController extends Controller
     /**
      * Ticket statistic
      */
-    public function statistics()
+    public function statistics(): TicketStatisticsResource
     {
-        //
+        $statistics = [
+            'day' => Ticket::query()->forDay()->count(),
+            'week' => Ticket::query()->forDay()->count(),
+            'mounth' => Ticket::query()->forDay()->count(),
+        ];
+
+        return new TicketStatisticsResource($statistics);
     }
 
     
