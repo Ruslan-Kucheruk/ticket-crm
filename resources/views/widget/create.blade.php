@@ -24,12 +24,12 @@
                     <input type="tel" name="phone" class="form-control" id="phone_id" placeholder="+380507301111">
                 </div>
                 <div class="mb-3">
-                    <label for="subject_id" class="form-label">Subject</label>
-                    <input type="text" name="subject" class="form-control" id="subject_id" placeholder="Subject">
-                </div>
-                <div class="mb-3">
                     <label for="email_id" class="form-label">Email address</label>
                     <input type="email" name="email" class="form-control" id="email_id" placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="subject_id" class="form-label">Subject</label>
+                    <input type="text" name="subject" class="form-control" id="subject_id" placeholder="Subject">
                 </div>
                 <div class="mb-3">
                     <label for="textarea_id" class="form-label">Message</label>
