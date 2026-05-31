@@ -231,6 +231,7 @@ curl -X GET http://127.0.0.1/api/tickets/statistics \
 
 ```bash
 ./vendor/bin/sail artisan test --filter=TicketApiTest
+```
 
 ## Дополнительная информация
 
