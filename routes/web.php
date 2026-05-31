@@ -9,9 +9,8 @@ Route::redirect('/', '/widget');
 
 Route::get('/widget', [WidgetController::class, 'create'])->name('widget.create');
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/dashboard', function(){
+    return redirect()->route('admin.tickets.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'role:manager|admin'])
@@ -28,5 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 require __DIR__.'/auth.php';

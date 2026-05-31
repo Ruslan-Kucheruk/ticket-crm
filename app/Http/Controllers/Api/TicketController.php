@@ -62,7 +62,7 @@ class TicketController extends Controller
         $statistics = [
             'day' => Ticket::query()->forDay()->count(),
             'week' => Ticket::query()->forWeek()->count(),
-            'mounth' => Ticket::query()->forMonth()->count(),
+            'month' => Ticket::query()->forMonth()->count(),
         ];
 
         return new TicketStatisticsResource($statistics);

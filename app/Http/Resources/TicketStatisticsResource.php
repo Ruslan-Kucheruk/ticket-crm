@@ -17,7 +17,7 @@ class TicketStatisticsResource extends JsonResource
         return [
             'day' => $this->resource['day'],
             'week' => $this->resource['week'],
-            'mounth' => $this->resource['mounth'],
+            'month' => $this->resource['month'],
         ];
     }
 }

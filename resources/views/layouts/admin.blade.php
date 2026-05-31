@@ -12,6 +12,12 @@
     <nav class="navbar navbar-dark bg-dark mb-4">
         <div class="container d-flex justify-content-between">
             <span class="navbar-brand mb-0 h1">Ticket CRM</span>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn btn-outline-light btn-sm">
+                    Logout
+                </button>
+            </form>
             <a href="{{ route('admin.tickets.index') }}" class="btn btn-sm btn-outline-light">
                 Tickets
             </a>
