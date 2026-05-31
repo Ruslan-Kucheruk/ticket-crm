@@ -8,7 +8,6 @@ use App\Http\Resources\TicketResource;
 use App\Http\Resources\TicketStatisticsResource;
 use App\Models\Customer;
 use App\Models\Ticket;
-use Carbon\Carbon;
 
 class TicketController extends Controller
 {
@@ -62,8 +61,8 @@ class TicketController extends Controller
     {
         $statistics = [
             'day' => Ticket::query()->forDay()->count(),
-            'week' => Ticket::query()->forDay()->count(),
-            'mounth' => Ticket::query()->forDay()->count(),
+            'week' => Ticket::query()->forWeek()->count(),
+            'mounth' => Ticket::query()->forMonth()->count(),
         ];
 
         return new TicketStatisticsResource($statistics);

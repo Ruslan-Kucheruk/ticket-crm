@@ -17,6 +17,8 @@ class Ticket extends Model implements HasMedia
 
     protected $fillable = ['customer_id', 'subject', 'message', 'status', 'manager_replied_at'];
 
+    protected $casts = ['manager_replied_at' => 'datetime'];
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);
