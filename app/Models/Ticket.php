@@ -12,8 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Ticket extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\TicketFactory> */
-    use HasFactory;
-    use InteractsWithMedia;
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = ['customer_id', 'subject', 'message', 'status', 'manager_replied_at'];
 

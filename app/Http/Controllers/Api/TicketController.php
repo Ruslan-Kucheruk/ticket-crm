@@ -48,7 +48,7 @@ class TicketController extends Controller
 
         if($request->hasFile('files')){
             foreach($request->file('files') as $file){
-                $ticket->addMedia($file)->toMediaCollection('attachments');
+                $ticket->addMedia($file)->toMediaCollection('attachments', 'public');
             }
         }
         return new TicketResource($ticket->load('customer'));
