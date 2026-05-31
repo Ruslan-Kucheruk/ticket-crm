@@ -1,59 +1,254 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Ticket CRM
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Мини CRM для сбора и обработки клиентских обращений через встраиваемый виджет обратной связи.
 
-## About Laravel
+## Стек технологий
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* PHP 8.4
+* Laravel 12
+* MySQL 8.4
+* Laravel Sail / Docker
+* Laravel Breeze
+* Spatie Laravel Permission
+* Spatie Laravel Media Library
+* Bootstrap 5
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Реализованный функционал
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* Публичный виджет обратной связи по адресу `/widget`
+* Отправка формы через AJAX
+* Создание клиентов и заявок
+* Загрузка файлов через Spatie Media Library
+* Ограничение: не более одной заявки в сутки от одного клиента (по email или телефону)
+* API статистики заявок
+* Административная панель для менеджеров
+* Фильтрация заявок по дате, статусу, email и телефону
+* Просмотр детальной информации по заявке
+* Изменение статуса заявки
+* Разграничение доступа по ролям
 
-## Learning Laravel
+## Установка проекта
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Клонировать репозиторий и перейти в директорию проекта:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone <repository-url>
+cd ticket-crm
+```
 
-## Laravel Sponsors
+Скопировать файл окружения:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+cp .env.example .env
+```
 
-### Premium Partners
+Запустить Docker-контейнеры:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+./vendor/bin/sail up -d
+```
 
-## Contributing
+Установить PHP-зависимости:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+./vendor/bin/sail composer install
+```
 
-## Code of Conduct
+Установить Node.js зависимости и собрать фронтенд:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+./vendor/bin/sail npm install
+./vendor/bin/sail npm run build
+```
 
-## Security Vulnerabilities
+Сгенерировать ключ приложения:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+./vendor/bin/sail artisan key:generate
+```
 
-## License
+Выполнить миграции и заполнить базу тестовыми данными:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+./vendor/bin/sail artisan migrate:fresh --seed
+```
+
+Создать символическую ссылку для файлов:
+
+```bash
+./vendor/bin/sail artisan storage:link
+```
+
+Очистить кэш приложения:
+
+```bash
+./vendor/bin/sail artisan optimize:clear
+```
+
+## Важные настройки .env
+
+Убедитесь, что указаны следующие значения:
+
+```env
+APP_URL=http://127.0.0.1
+FILESYSTEM_DISK=public
+```
+
+## Тестовые данные
+
+После выполнения сидеров будет создан менеджер:
+
+```text
+Email: manager@test.com
+Пароль: password
+```
+
+Также будут созданы тестовые клиенты и заявки.
+
+## Основные страницы
+
+Виджет обратной связи:
+
+```text
+http://127.0.0.1/widget
+```
+
+Страница авторизации:
+
+```text
+http://127.0.0.1/login
+```
+
+Административная панель:
+
+```text
+http://127.0.0.1/admin/tickets
+```
+
+## Пример подключения виджета через iframe
+
+Виджет можно встроить на сторонний сайт следующим образом:
+
+```html
+<iframe
+    src="http://127.0.0.1/widget"
+    width="100%"
+    height="700"
+    style="border: none;"
+></iframe>
+```
+
+## API
+
+### Создание заявки
+
+```http
+POST /api/tickets
+```
+
+Пример запроса:
+
+```bash
+curl -X POST http://127.0.0.1/api/tickets \
+  -H "Accept: application/json" \
+  -F "name=John Doe" \
+  -F "phone=+380507301111" \
+  -F "email=john@example.com" \
+  -F "subject=Тестовая заявка" \
+  -F "message=Здравствуйте, нужна помощь"
+```
+
+Пример с загрузкой файла:
+
+```bash
+curl -X POST http://127.0.0.1/api/tickets \
+  -H "Accept: application/json" \
+  -F "name=John Doe" \
+  -F "phone=+380507301111" \
+  -F "email=john@example.com" \
+  -F "subject=Тестовая заявка" \
+  -F "message=Здравствуйте, нужна помощь" \
+  -F "files[]=@/path/to/file.pdf"
+```
+
+Пример успешного ответа:
+
+```json
+{
+  "data": {
+    "id": 1,
+    "subject": "Тестовая заявка",
+    "message": "Здравствуйте, нужна помощь",
+    "status": "new",
+    "customer": {
+      "id": 1,
+      "name": "John Doe",
+      "phone": "+380507301111",
+      "email": "john@example.com"
+    }
+  }
+}
+```
+
+Если клиент пытается создать более одной заявки в течение суток:
+
+```json
+{
+  "message": "You can send only one request per day."
+}
+```
+
+### Статистика заявок
+
+```http
+GET /api/tickets/statistics
+```
+
+Пример запроса:
+
+```bash
+curl -X GET http://127.0.0.1/api/tickets/statistics \
+  -H "Accept: application/json"
+```
+
+Пример ответа:
+
+```json
+{
+  "data": {
+    "day": 10,
+    "week": 25,
+    "month": 68
+  }
+}
+```
+
+## Запуск тестов
+
+В проекте реализованы Feature-тесты для API заявок.
+
+Запуск:
+
+```bash
+./vendor/bin/sail artisan test --filter=TicketApiTest
+
+## Дополнительная информация
+
+* Административная панель защищена аутентификацией и проверкой ролей.
+* Доступ к разделу `/admin/*` имеют только пользователи с ролями `manager` или `admin`.
+* Файлы сохраняются на диске `public` и прикрепляются к заявкам через Spatie Media Library.
+* Виджет реализован как отдельная Blade-страница, что упрощает его встраивание через iframe.
+
+## Архитектурные решения
+
+В проекте используется разделение на публичную часть (виджет обратной связи) и административную панель для менеджеров.
+
+Для работы с API применяются Form Requests для валидации входящих данных, API Resources для формирования ответов и Eloquent Scopes для получения статистики заявок за день, неделю и месяц.
+
+Для хранения вложений используется пакет Spatie Media Library, а для разграничения доступа — Spatie Permission.
+
+Авторизация менеджеров реализована через Laravel Breeze. Доступ к административной панели ограничен пользователями с ролями `manager` и `admin`.
+
+Виджет реализован как отдельная Blade-страница и может быть встроен на сторонний сайт через iframe.
+
+Для ограничения количества обращений используется проверка по email и номеру телефона: клиент может создать не более одной заявки в течение 24 часов.
